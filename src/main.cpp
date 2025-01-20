@@ -1,18 +1,18 @@
 #include <Arduino.h>
+#include <BleKeyboard.h>
 
-// put function declarations here:
-int myFunction(int, int);
+BleKeyboard bleKeyboard;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    Serial.begin(115200);
+    bleKeyboard.begin();  // 初始化 BLE 鍵盤
+    Serial.println("BLE Keyboard Initialized");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    if (bleKeyboard.isConnected()) {  // 確認是否連接到主機
+        Serial.println("Sending 'Hello World'");
+        bleKeyboard.print("Hello World!");  // 傳送字串到主機
+        delay(1000);  // 每秒傳送一次
+    }
 }
